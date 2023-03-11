@@ -1,26 +1,27 @@
 
 const express = require('express');
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
-const app = express();
 const {engine} = require('express-handlebars')
 
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+const app = express();
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.engine('handlebars', engine({defaultLayout: 'main'}))
 app.set('view engine', 'handlebars')
-app.set('views', './views')
+// app.set('views', './views')
 
 
 // app.get('/', function(req, res) {
 //     res.sendFile(__dirname + '/config.html');
 // });
 
-// app.post('/enviodados', function(req, res) {
-//     console.log(req.body)
-//     res.sendFile(__dirname + '/config.html', req.body)
-// })
+app.post('/enviodados', function(req, res) {
+    console.log(req.body)
+    res.render('resposta', req.body)
+})
 
 app.get('/', (req, res)=> {
 
@@ -28,9 +29,9 @@ app.get('/', (req, res)=> {
 
 })
 
-app.get('/teste', (req, res)=> {
+app.post('/teste', function(req, res) {
 
-    res.render('teste')
+    res.send('teste')
 })
 
 
